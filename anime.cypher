@@ -44,12 +44,6 @@ MERGE (r3)-[:`HAS_GENRE`]->(b);
 MATCH (b:Genre {name: 'Romance'})<-[:HAS_GENRE]-(anime:Anime)
 RETURN anime.name, b.name;
 
-MATCH (anime:Anime)
-WITH anime.name AS name, COLLECT(anime) AS nodes
-WHERE SIZE(nodes) > 1
-// Keep the first node and delete relationships for the duplicates
-FOREACH (n IN TAIL(nodes) | DETACH DELETE n);
-
 //Horror animes
 
 CREATE (h1: Anime {name: 'Tokyo Ghoul', year: 2014});
